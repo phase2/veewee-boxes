@@ -3,13 +3,14 @@
 
 date > /etc/vagrant_box_build_time
 
-yum -y install gcc bzip2 make kernel-devel-`uname -r` patch
+#yum -y install gcc bzip2 make kernel-devel-`uname -r`
+#yum -y install gcc-c++ zlib-devel openssl-devel readline-devel sqlite3-devel patch
 
-yum -y install gcc-c++ zlib-devel openssl-devel readline-devel sqlite3-devel
+yum -y kernel-devel-`uname -r`
 
 # Finally, get core packages up to date before leaving.
-yum -y update
-yum -y upgrade
+# yum -y update
+# yum -y upgrade
 
 yum -y clean all
 

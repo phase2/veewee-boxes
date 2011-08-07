@@ -3,7 +3,7 @@
 
 date > /etc/vagrant_box_build_time
 
-yum -y install gcc bzip2 make kernel-devel-`uname -r` patch
+yum -y install gcc bzip2 make kernel-devel-`uname -r` kernel-headers-`uname -r` patch
 
 yum -y install gcc-c++ zlib-devel openssl-devel readline-devel sqlite3-devel
 
@@ -37,7 +37,7 @@ VBOX_VERSION=$(cat /home/vagrant/.vbox_version)
 cd /tmp
 wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso
 mount -o loop VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
-sh /mnt/VBoxLinuxAdditions.run
+sh /mnt/VBoxLinuxAdditions.run --nox11
 umount /mnt
 
 rm VBoxGuestAdditions_$VBOX_VERSION.iso
