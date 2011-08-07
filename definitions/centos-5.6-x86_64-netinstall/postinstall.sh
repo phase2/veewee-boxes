@@ -7,7 +7,7 @@ yum -y kernel-devel-`uname -r`
 yum -y clean all
 
 # Install ruby.
-wget http://192.168.0.150/frs/download.php/71096/ruby-enterprise-1.8.7-2010.02.tar.gz
+wget http://192.168.0.150/ruby-enterprise-1.8.7-2010.02.tar.gz
 #wget http://rubyforge.org/frs/download.php/71096/ruby-enterprise-1.8.7-2010.02.tar.gz
 tar xzvf ruby-enterprise-1.8.7-2010.02.tar.gz
 ./ruby-enterprise-1.8.7-2010.02/installer -a /opt/ruby --no-dev-docs --dont-install-useful-gems
