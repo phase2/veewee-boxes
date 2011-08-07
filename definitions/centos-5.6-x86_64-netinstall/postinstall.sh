@@ -3,15 +3,7 @@
 
 date > /etc/vagrant_box_build_time
 
-#yum -y install gcc bzip2 make kernel-devel-`uname -r`
-#yum -y install gcc-c++ zlib-devel openssl-devel readline-devel sqlite3-devel patch
-
 yum -y kernel-devel-`uname -r`
-
-# Finally, get core packages up to date before leaving.
-# yum -y update
-# yum -y upgrade
-
 yum -y clean all
 
 # Install ruby.
@@ -20,7 +12,8 @@ tar xzvf ruby-enterprise-1.8.7-2010.02.tar.gz
 ./ruby-enterprise-1.8.7-2010.02/installer -a /opt/ruby --no-dev-docs --dont-install-useful-gems
 echo 'PATH=$PATH:/opt/ruby/bin'> /etc/profile.d/rubyenterprise.sh
 rm -rf ./ruby-enterprise-1.8.7-2010.02/
-rm ruby-enterprise-1.8.7-2010.02.tar.gz
+shred --remove --zero --iterations=1 ruby-enterprise-1.8.7-2010.02.tar.gz
+#rm ruby-enterprise-1.8.7-2010.02.tar.gz
 
 # Install Chef and Puppet.
 /opt/ruby/bin/gem install chef --no-ri --no-rdoc
@@ -36,16 +29,19 @@ chown -R vagrant /home/vagrant/.ssh
 # Install the Virtualbox Guest Additions.
 VBOX_VERSION=$(cat /home/vagrant/.vbox_version)
 cd /tmp
-wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso
+#wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso
+wget http://192.168.0.150/VBoxGuestAdditions_$VBOX_VERSION.iso
 mount -o loop VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
 sh /mnt/VBoxLinuxAdditions.run
 umount /mnt
 
-rm VBoxGuestAdditions_$VBOX_VERSION.iso
+# Try for a greater compaction by shredding this and writing over it with zeros.
+shred --remove --zero --iterations=1 VBoxGuestAdditions_$VBOX_VERSION.iso
+#rm VBoxGuestAdditions_$VBOX_VERSION.iso
 
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
 
-reboot
+#reboot
 #poweroff -h
 
 exit
