@@ -7,10 +7,15 @@ yum -y kernel-devel-`uname -r`
 yum -y clean all
 
 # Install ruby.
-wget http://rubyforge.org/frs/download.php/71096/ruby-enterprise-1.8.7-2010.02.tar.gz
+wget http://192.168.0.150/frs/download.php/71096/ruby-enterprise-1.8.7-2010.02.tar.gz
+#wget http://rubyforge.org/frs/download.php/71096/ruby-enterprise-1.8.7-2010.02.tar.gz
 tar xzvf ruby-enterprise-1.8.7-2010.02.tar.gz
 ./ruby-enterprise-1.8.7-2010.02/installer -a /opt/ruby --no-dev-docs --dont-install-useful-gems
 echo 'PATH=$PATH:/opt/ruby/bin'> /etc/profile.d/rubyenterprise.sh
+
+# As before, remove temporary files by overwriting them with zeroes so that the
+# compaction (or at least compression) can be more effective.
+find ./ruby-enterprise-1.8.7-2010.02/ -type f -execdir shred --remove --zero --iterations=1 '{}' \;
 rm -rf ./ruby-enterprise-1.8.7-2010.02/
 shred --remove --zero --iterations=1 ruby-enterprise-1.8.7-2010.02.tar.gz
 #rm ruby-enterprise-1.8.7-2010.02.tar.gz
