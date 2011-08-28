@@ -37,6 +37,7 @@ rm -f /etc/udev/rules.d/70-persistent-net.rules
 echo >> /etc/rc.local
 echo 'cp -f /etc/sysconfig/network-scripts/ifcfg-eth0 /tmp/eth0' >> /etc/rc.local
 echo 'sed "/^HWADDR/d" /tmp/eth0 > /etc/sysconfig/network-scripts/ifcfg-eth0' >> /etc/rc.local
+echo 'grep HWADDR /tmp/eth0 && ifup eth0' >> /etc/rc.local
 
 # Aha - added shredding.
 # dd if=/dev/zero of=/tmp/clean || rm /tmp/clean
