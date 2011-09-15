@@ -6,7 +6,7 @@ date > /etc/vagrant_box_build_time
 #yum -y clean all
 
 # Sorry, Chef.
-#gem install --no-ri --no-rdoc chef
+gem install --no-ri --no-rdoc chef
 gem install --no-ri --no-rdoc puppet
 
 # Installing vagrant keys
@@ -45,6 +45,6 @@ mv /boot/grub/grub.conf /boot/grub/grub.conf.bak
 mv /tmp/new_grub.conf /boot/grub/grub.conf
 
 # Aha - added shredding.
-# dd if=/dev/zero of=/tmp/clean || rm /tmp/clean
+dd if=/dev/zero of=/tmp/clean || rm /tmp/clean
 
 exit
