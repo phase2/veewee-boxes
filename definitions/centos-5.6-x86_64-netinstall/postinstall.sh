@@ -7,7 +7,7 @@ yum -y kernel-devel-`uname -r`
 yum -y clean all
 
 # Install ruby.
-wget http://192.168.0.150/ruby-enterprise-1.8.7-2010.02.tar.gz
+wget http://192.168.1.200/ruby-enterprise-1.8.7-2010.02.tar.gz
 #wget http://rubyforge.org/frs/download.php/71096/ruby-enterprise-1.8.7-2010.02.tar.gz
 tar xzvf ruby-enterprise-1.8.7-2010.02.tar.gz
 ./ruby-enterprise-1.8.7-2010.02/installer -a /opt/ruby --no-dev-docs --dont-install-useful-gems
@@ -35,7 +35,7 @@ chown -R vagrant /home/vagrant/.ssh
 VBOX_VERSION=$(cat /home/vagrant/.vbox_version)
 cd /tmp
 #wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso
-wget http://192.168.0.150/VBoxGuestAdditions_$VBOX_VERSION.iso
+wget http://192.168.1.200/VBoxGuestAdditions_$VBOX_VERSION.iso
 mount -o loop VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
 sh /mnt/VBoxLinuxAdditions.run
 umount /mnt
@@ -51,7 +51,7 @@ sed -e "s/dhcp/none/" /etc/sysconfig/network-scripts/ifcfg-eth0 > /etc/sysconfig
 
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
 
-#reboot
-#poweroff -h
+# Aha - added shredding.
+dd if=/dev/zero of=/tmp/clean || rm /tmp/clean
 
 exit
