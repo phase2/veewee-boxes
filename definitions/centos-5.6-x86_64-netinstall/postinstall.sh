@@ -49,7 +49,7 @@ shred --remove --zero --iterations=1 VBoxGuestAdditions_$VBOX_VERSION.iso
 # On startup, remove HWADDR from the eth0 interface.
 cp -f /etc/sysconfig/network-scripts/ifcfg-eth0 /tmp/eth0
 sed "/^HWADDR/d" /tmp/eth0 > /etc/sysconfig/network-scripts/ifcfg-eth0
-sed -e "s/dhcp/none/" /etc/sysconfig/network-scripts/ifcfg-eth0 > /etc/sysconfig/network-scripts/ifcfg-eth1
+sed -e "s/dhcp/none/;s/eth0/eth1/" /etc/sysconfig/network-scripts/ifcfg-eth0 > /etc/sysconfig/network-scripts/ifcfg-eth1
 
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
 
