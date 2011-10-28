@@ -51,6 +51,10 @@ cp -f /etc/sysconfig/network-scripts/ifcfg-eth0 /tmp/eth0
 sed "/^HWADDR/d" /tmp/eth0 > /etc/sysconfig/network-scripts/ifcfg-eth0
 sed -e "s/dhcp/none/;s/eth0/eth1/" /etc/sysconfig/network-scripts/ifcfg-eth0 > /etc/sysconfig/network-scripts/ifcfg-eth1
 
+# Add kernel parameters to prevent excessive CPU stealing under virtualization.
+sed -e's/\tkernel .*/& notsc divider=10/' /boot/grub/grub.conf > /tmp/grub.conf
+mv /tmp/grub.conf /boot/grub/grub.conf
+
 sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers
 
 # Aha - added shredding.
