@@ -40,7 +40,7 @@ sed "/^HWADDR/d" /tmp/eth0 > /etc/sysconfig/network-scripts/ifcfg-eth0
 sed -e "s/dhcp/none/;s/eth0/eth1/" /etc/sysconfig/network-scripts/ifcfg-eth0 > /etc/sysconfig/network-scripts/ifcfg-eth1
 
 # Prevent way too much CPU usage in VirtualBox by disabling APIC.
-sed -e 's/kernel.*/& noapic/' /boot/grub/grub.conf > /tmp/new_grub.conf
+sed -e 's/\tkernel.*/& noapic/' /boot/grub/grub.conf > /tmp/new_grub.conf
 mv /boot/grub/grub.conf /boot/grub/grub.conf.bak
 mv /tmp/new_grub.conf /boot/grub/grub.conf
 
