@@ -19,7 +19,8 @@ chown -R vagrant /home/vagrant/.ssh
 # Installing the virtualbox guest additions
 VBOX_VERSION=$(cat /home/vagrant/.vbox_version)
 cd /tmp
-wget http://192.168.1.200/centos/VBoxGuestAdditions_$VBOX_VERSION.iso
+wget http://192.168.0.155/centos/VBoxGuestAdditions_$VBOX_VERSION.iso
+#wget http://192.168.1.200/centos/VBoxGuestAdditions_$VBOX_VERSION.iso
 #wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso
 mount -o loop VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
 sh /mnt/VBoxLinuxAdditions.run
@@ -34,10 +35,9 @@ ln -sf /dev/null /lib/udev/rules.d/75-persistent-net-generator.rules
 rm -f /etc/udev/rules.d/70-persistent-net.rules
 
 # On startup, remove HWADDR from the eth0 interface.
-echo >> /etc/rc.local
-echo 'cp -f /etc/sysconfig/network-scripts/ifcfg-eth0 /tmp/eth0' >> /etc/rc.local
-echo 'sed "/^HWADDR/d" /tmp/eth0 > /etc/sysconfig/network-scripts/ifcfg-eth0' >> /etc/rc.local
-echo 'grep HWADDR /tmp/eth0 && ifup eth0' >> /etc/rc.local
+cp -f /etc/sysconfig/network-scripts/ifcfg-eth0 /tmp/eth0
+sed "/^HWADDR/d" /tmp/eth0 > /etc/sysconfig/network-scripts/ifcfg-eth0
+sed -e "s/dhcp/none/;s/eth0/eth1/" /etc/sysconfig/network-scripts/ifcfg-eth0 > /etc/sysconfig/network-scripts/ifcfg-eth1
 
 # Prevent way too much CPU usage in VirtualBox by disabling APIC.
 sed -e 's/kernel.*/& noapic/' /boot/grub/grub.conf > /tmp/new_grub.conf
