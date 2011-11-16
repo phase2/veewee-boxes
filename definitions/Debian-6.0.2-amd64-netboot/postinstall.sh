@@ -13,12 +13,14 @@ cp /etc/sudoers /etc/sudoers.orig
 sed -i -e 's/%sudo ALL=(ALL) ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
 
 #Installing ruby
-wget http://rubyforge.org/frs/download.php/71096/ruby-enterprise-1.8.7-2010.02.tar.gz
+#wget http://rubyforge.org/frs/download.php/71096/ruby-enterprise-1.8.7-2010.02.tar.gz
+wget http://192.168.1.200/ruby-enterprise-1.8.7-2010.02.tar.gz
 tar xzvf ruby-enterprise-1.8.7-2010.02.tar.gz
 ./ruby-enterprise-1.8.7-2010.02/installer -a /opt/ruby --no-dev-docs --dont-install-useful-gems
 echo 'PATH=$PATH:/opt/ruby/bin'> /etc/profile.d/rubyenterprise.sh
 rm -rf ./ruby-enterprise-1.8.7-2010.02/
-rm ruby-enterprise-1.8.7-2010.02.tar.gz
+shred --remove --zero --iterations=1 ruby-enterprise-1.8.7-2010.02.tar.gz
+#rm ruby-enterprise-1.8.7-2010.02.tar.gz
 
 #Installing chef & Puppet
 /opt/ruby/bin/gem install chef --no-ri --no-rdoc
@@ -41,6 +43,7 @@ aptitude -y purge virtualbox-ose-guest-x11 virtualbox-ose-guest-dkms virtualbox-
 VBOX_VERSION=$(cat /home/vagrant/.vbox_version)
 cd /tmp
 wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso
+#wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso
 mount -o loop VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
 yes|sh /mnt/VBoxLinuxAdditions.run
 umount /mnt
@@ -48,7 +51,8 @@ umount /mnt
 apt-get -y remove linux-headers-$(uname -r) build-essential
 apt-get -y autoremove
 
-rm VBoxGuestAdditions_$VBOX_VERSION.iso
+shred --remove --zero --iterations=1 VBoxGuestAdditions_$VBOX_VERSION.iso
+#rm VBoxGuestAdditions_$VBOX_VERSION.iso
 
 # Zero out the free space to save space in the final image:
 dd if=/dev/zero of=/EMPTY bs=1M
