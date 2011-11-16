@@ -7,7 +7,7 @@ yum -y kernel-devel-`uname -r`
 yum -y clean all
 
 # Install ruby.
-wget http://192.168.0.155/ruby-enterprise-1.8.7-2010.02.tar.gz
+wget http://192.168.1.200/ruby-enterprise-1.8.7-2010.02.tar.gz
 #wget http://192.168.1.200/ruby-enterprise-1.8.7-2010.02.tar.gz
 #wget http://rubyforge.org/frs/download.php/71096/ruby-enterprise-1.8.7-2010.02.tar.gz
 tar xzvf ruby-enterprise-1.8.7-2010.02.tar.gz
@@ -36,7 +36,7 @@ chown -R vagrant /home/vagrant/.ssh
 VBOX_VERSION=$(cat /home/vagrant/.vbox_version)
 cd /tmp
 #wget http://download.virtualbox.org/virtualbox/$VBOX_VERSION/VBoxGuestAdditions_$VBOX_VERSION.iso
-wget http://192.168.0.155/VBoxGuestAdditions_$VBOX_VERSION.iso
+wget http://192.168.1.200/VBoxGuestAdditions_$VBOX_VERSION.iso
 #wget http://192.168.1.200/VBoxGuestAdditions_$VBOX_VERSION.iso
 mount -o loop VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
 sh /mnt/VBoxLinuxAdditions.run
