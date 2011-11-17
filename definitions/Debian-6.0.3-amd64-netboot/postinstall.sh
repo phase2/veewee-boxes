@@ -4,7 +4,7 @@ date > /etc/vagrant_box_build_time
 
 #Updating the box
 apt-get -y update
-apt-get -y install linux-headers-$(uname -r) build-essential
+apt-get -y install linux-headers-$(uname -r)
 apt-get -y install zlib1g-dev libssl-dev libreadline5-dev
 apt-get clean
 
@@ -12,19 +12,9 @@ apt-get clean
 cp /etc/sudoers /etc/sudoers.orig
 sed -i -e 's/%sudo ALL=(ALL) ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
 
-#Installing ruby
-#wget http://rubyforge.org/frs/download.php/71096/ruby-enterprise-1.8.7-2010.02.tar.gz
-wget http://192.168.1.200/ruby-enterprise-1.8.7-2010.02.tar.gz
-tar xzvf ruby-enterprise-1.8.7-2010.02.tar.gz
-./ruby-enterprise-1.8.7-2010.02/installer -a /opt/ruby --no-dev-docs --dont-install-useful-gems
-echo 'PATH=$PATH:/opt/ruby/bin'> /etc/profile.d/rubyenterprise.sh
-rm -rf ./ruby-enterprise-1.8.7-2010.02/
-shred --remove --zero --iterations=1 ruby-enterprise-1.8.7-2010.02.tar.gz
-#rm ruby-enterprise-1.8.7-2010.02.tar.gz
-
 #Installing chef & Puppet
-/opt/ruby/bin/gem install chef --no-ri --no-rdoc
-/opt/ruby/bin/gem install puppet --no-ri --no-rdoc
+gem install chef --no-ri --no-rdoc
+gem install puppet --no-ri --no-rdoc
 
 #Installing vagrant keys
 mkdir /home/vagrant/.ssh
@@ -48,7 +38,7 @@ mount -o loop VBoxGuestAdditions_$VBOX_VERSION.iso /mnt
 yes|sh /mnt/VBoxLinuxAdditions.run
 umount /mnt
 
-apt-get -y remove linux-headers-$(uname -r) build-essential
+apt-get -y remove linux-headers-$(uname -r)
 apt-get -y autoremove
 
 shred --remove --zero --iterations=1 VBoxGuestAdditions_$VBOX_VERSION.iso
@@ -72,4 +62,8 @@ rm /lib/udev/rules.d/75-persistent-net-generator.rules
 
 echo "Adding a 2 sec delay to the interface up, to make the dhclient happy"
 echo "pre-up sleep 2" >> /etc/network/interfaces
+
+# One final apt-get update so that it should work upon bringing the box up.
+apt-get update
+
 exit
