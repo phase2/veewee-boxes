@@ -16,6 +16,10 @@ sed -i -e 's/%sudo ALL=(ALL) ALL/%sudo ALL=NOPASSWD:ALL/g' /etc/sudoers
 gem install chef --no-ri --no-rdoc
 gem install puppet --no-ri --no-rdoc
 
+#Putting gems in $PATH
+echo 'PATH=$PATH:/var/lib/gems/1.8/bin' >> /etc/profile.d/rubygems.sh
+echo 'export PATH' >> /etc/profile.d/rubygems.sh
+
 #Installing vagrant keys
 mkdir /home/vagrant/.ssh
 chmod 700 /home/vagrant/.ssh
