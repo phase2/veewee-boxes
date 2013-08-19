@@ -28,7 +28,8 @@ means, e.g., downloading and unpacking jruby.  Follow the
 install it.
 
 #### Set the version
-Once you have installed rbenv and ruby-build, install ruby 2.0:
+Once you have installed rbenv and ruby-build, install your desired ruby version.
+For example, to use ruby 2.0:
 
     $ rbenv install 2.0.0-p247
     
