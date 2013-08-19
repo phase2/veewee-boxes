@@ -76,3 +76,14 @@ To run veewee:
 
     $ bundle exec veewee
 
+### Usage
+
+Using veewee with bundler is a little... verbose. You can alias veewee:
+
+    $ alias veewee 'bundle exec veewee'
+
+To see what you can do with VirtualBox:
+
+    $ bundle exec veewee vbox help
+    
+etc.
